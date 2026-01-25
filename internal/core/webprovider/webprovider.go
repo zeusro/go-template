@@ -35,6 +35,14 @@ func NewGinEngine(config config.Config) MyGinEngine {
 	engine.Use(ginzap.Ginzap(zapLogger, time.RFC3339, true))
 	// engine.Use(ginzap.RecoveryWithZap(zapLogger, true))
 	engine.Use(RecoveryMiddleware(zapLogger, true))
+
+	// Add Prometheus metrics middleware if enabled
+	if config.Observability.Prometheus {
+		engine.Use(func(c *gin.Context) {
+			// Prometheus middleware will be injected here
+			c.Next()
+		})
+	}
 	return MyGinEngine{
 		Gin: engine,
 		Api: engine.Group("/api"),

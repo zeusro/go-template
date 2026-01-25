@@ -22,9 +22,6 @@ import (
 func main() {
 	modules := fx.Options(
 		core.CoreModule,
-		// model.Module,
-		// middleware.Module,
-		// repository.Module,
 		service.Modules,
 		api.Modules)
 	app := fx.New(modules,

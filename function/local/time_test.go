@@ -14,3 +14,7 @@ func TestShowCurrentTimeZone(t *testing.T) {
 	fmt.Println(os.Getenv("TZ"))
 	ShowCurrentTimeZone()
 }
+
+func TestGetCurrentTime(t *testing.T) {
+	GetCurrentTime(10)
+}

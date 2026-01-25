@@ -1,12 +1,41 @@
-FROM golang:1.14.0-alpine3.11 as build-env
-ADD . /src/$org/$project-name
-WORKDIR /src/$org/$project-name
-RUN apk update
-# 分层构建,复用缓存
-RUN GOARCH=amd64 CGO_ENABLED=0 go build -mod vendor -o $app  $org/$app
+# Build stage
+FROM golang:1.24-alpine AS builder
 
-FROM alpine:3.11
-COPY --from=build-env /src/$org/$project-name/$app /app/$app
-# COPY config.yaml /app/config.yaml
+WORKDIR /build
+
+# Install build dependencies
+RUN apk add --no-cache git make
+
+# Copy go mod files
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Copy source code
+COPY . .
+
+# Build the application
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
+    -ldflags='-w -s -extldflags "-static"' \
+    -o hermes ./cmd/web
+
+# Runtime stage
+FROM alpine:3.19
+
+RUN apk --no-cache add ca-certificates tzdata
+
 WORKDIR /app
-ENTRYPOINT ["/app/$app"]
+
+# Copy binary from builder
+COPY --from=builder /build/hermes /app/hermes
+COPY --from=builder /build/.config.yaml /app/.config.yaml
+
+# Create non-root user
+RUN addgroup -g 1000 appuser && \
+    adduser -D -u 1000 -G appuser appuser && \
+    chown -R appuser:appuser /app
+
+USER appuser
+
+EXPOSE 8080 9090
+
+ENTRYPOINT ["/app/hermes"]

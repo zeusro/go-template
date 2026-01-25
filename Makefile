@@ -1,68 +1,82 @@
-BUILD_TIME 			  := $(shell LC_TIME=zh_CN.UTF-8 date +"%Y-%m-%d %H:%M:%S %A")
-#BUILD_TIME            := $(shell date +%Y-%m-%dT%H:%M:%S%z 2>/dev/null || powershell -Command "Get-Date -Format o")
-PREFIX		  ?= zeusro
-APP_NAME      ?= $app:latest
-IMAGE		  ?= $(PREFIX)/$(APP_NAME)
-MIRROR_IMAGE  ?= registry.cn-shenzhen.aliyuncs.com/mirror/$app:latest
-MODULE		  ?= $org/$project-name
-ARCH		  ?= amd64
+.PHONY: help build test lint run clean docker-build docker-run migrate auto_commit
 
-auto_commit:
-	git add .
-	git commit -am "$(BUILD_TIME)"
-	# git remote add template git@github.com:zeusro/go-template.git
-	# git pull template master
-	git pull
-	git push
+help: ## Show this help message
+	@echo 'Usage: make [target]'
+	@echo ''
+	@echo 'Available targets:'
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "  %-15s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-buildAndRun:
-	GOARCH=$(ARCH) CGO_ENABLED=0 go build
-	# ./$app
+build: ## Build the application
+	@echo "Building application..."
+	go build -o bin/hermes ./cmd/web
 
-fix-dep:
+test: ## Run tests
+	@echo "Running tests..."
+	go test -v -race -coverprofile=coverage.out ./...
+
+test-coverage: test ## Run tests with coverage report
+	@echo "Generating coverage report..."
+	go tool cover -html=coverage.out -o coverage.html
+	@echo "Coverage report generated: coverage.html"
+
+lint: ## Run linters
+	@echo "Running linters..."
+	golangci-lint run
+
+run: ## Run the application
+	@echo "Running application..."
+	go run ./cmd/web/main.go
+
+clean: ## Clean build artifacts
+	@echo "Cleaning..."
+	rm -rf bin/
+	rm -f coverage.out coverage.html
+
+docker-build: ## Build Docker image
+	@echo "Building Docker image..."
+	docker build -f deploy/docker/Dockerfile -t hermes:latest .
+
+docker-run: ## Run Docker container
+	@echo "Running Docker container..."
+	docker run -d \
+		--name hermes \
+		-p 8080:8080 \
+		-p 9090:9090 \
+		-v $(PWD)/.config.yaml:/app/.config.yaml \
+		hermes:latest
+
+docker-stop: ## Stop Docker container
+	@echo "Stopping Docker container..."
+	docker stop hermes || true
+	docker rm hermes || true
+
+migrate: ## Run database migrations (manual)
+	@echo "Running migrations..."
+	@echo "Migrations are automatically run on startup"
+
+deps: ## Download dependencies
+	@echo "Downloading dependencies..."
+	go mod download
 	go mod tidy
-	go mod vendor
 
-# usage: dep="github.com/stretchr/testify/assert" make get
-get:
-	go get -u -v $(dep)
-	go mod tidy && go mod verify && go mod vendor
-
-init:
-	@if [ -z "$(project)" ]; then \
-		echo "❌ 请先设置 project 环境变量，例如：make init project=dir-monitor"; \
-		exit 1; \
+proto: ## Generate gRPC code from proto files
+	@echo "Generating gRPC code..."
+	@if command -v protoc > /dev/null; then \
+		protoc --go_out=. --go_opt=paths=source_relative \
+			--go-grpc_out=. --go-grpc_opt=paths=source_relative \
+			api/grpc/*.proto; \
 	else \
-		echo "✅ 初始化 Go 项目：$(project)"; \
-		go mod init $(project); \
-		go mod tidy; \
+		echo "protoc not found. Install it first."; \
 	fi
 
-mirror: pull
-	docker build -t $(MIRROR_IMAGE) -f deploy/docker/Dockerfile .
-
-pull:
-	git reset --hard HEAD
-	git pull
-
-release-mirror: mirror
-	docker push $(MIRROR_IMAGE)
-
-rebuild: pull	
-	docker build -t $(IMAGE) -f deploy/docker/Dockerfile .
-
-test:
-	mkdir -p artifacts/report/coverage
-	go test -v -cover -coverprofile c.out.tmp ./...
-	cat c.out.tmp | grep -v "_mock.go" > c.out
-	go tool cover -html=c.out -o artifacts/report/coverage/index.html	
-
-update-dep: update-mod fix-dep
-
-up:
-	docker-compose build --force-rm --no-cache
-	docker-compose up
-
-update-mod:
-	# type your dep
-	
+auto_commit: ## Auto commit: git pull, commit with timestamp, and push
+	@echo "Pulling latest changes..."
+	@git pull
+	@echo "Staging all changes..."
+	@git add -A
+	@echo "Committing with timestamp..."
+	@TIMESTAMP=$$(date +"%Y-%m-%d %H:%M:%S %z"); \
+	git commit -m "Auto commit: $$TIMESTAMP" || echo "No changes to commit"
+	@echo "Pushing changes..."
+	@git push
+	@echo "Auto commit completed!"

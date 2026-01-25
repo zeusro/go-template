@@ -22,4 +22,5 @@ func NewRoutes(indexRoutes IndexRoutes) Routes {
 
 var Modules = fx.Options(
 	fx.Provide(NewIndexRoutes),
+	fx.Provide(NewUserHandler),
 	fx.Provide(NewRoutes))

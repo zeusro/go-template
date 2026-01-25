@@ -8,20 +8,22 @@ import (
 )
 
 type IndexRoutes struct {
-	logger logprovider.Logger
-	gin    webprovider.MyGinEngine
-	health service.HealthService
-	hermes service.TranslateService
+	logger      logprovider.Logger
+	gin         webprovider.MyGinEngine
+	health      service.HealthService
+	hermes      service.TranslateService
+	userHandler *UserHandler
 	// m middleware.JWTMiddleware
 }
 
 func NewIndexRoutes(logger logprovider.Logger, gin webprovider.MyGinEngine,
-	s service.HealthService, herms service.TranslateService) IndexRoutes {
+	s service.HealthService, herms service.TranslateService, userHandler *UserHandler) IndexRoutes {
 	return IndexRoutes{
-		logger: logger,
-		gin:    gin,
-		health: s,
-		hermes: herms,
+		logger:      logger,
+		gin:         gin,
+		health:      s,
+		hermes:      herms,
+		userHandler: userHandler,
 	}
 }
 
@@ -43,6 +45,20 @@ func (r IndexRoutes) SetUp() {
 		index.GET("health", r.health.Check)
 		index.OPTIONS("healthz", r.health.Check)
 		index.GET("healthz", r.health.Check)
+
+		// User routes
+		users := index.Group("/users")
+		{
+			users.POST("", r.userHandler.CreateUser)
+			users.GET("", r.userHandler.ListUsers)
+			users.GET(":id", r.userHandler.GetUser)
+		}
+
+		// Prometheus metrics endpoint
+		index.GET("/metrics", func(c *gin.Context) {
+			// Prometheus handler will be added via middleware
+			c.Next()
+		})
 	}
 
 }

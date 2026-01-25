@@ -1,0 +1,71 @@
+# 应用配置示例
+# 复制此文件为 .config.yaml 并修改相应配置
+
+# 调试模式
+debug: false
+
+# Web 服务配置
+web:
+  port: 8080
+  cors: true
+
+# 日志配置
+log:
+  level: info                # debug / info / warn / error
+  path: logs/app.log
+
+# JWT 配置
+jwt:
+  expiration: 120            # 过期时间（小时）
+  signing_key: your-secret-key-here
+
+# 数据库配置
+database:
+  host: localhost
+  port: 5432
+  user: postgres
+  password: postgres
+  dbname: hermes
+  sslmode: disable
+  max_open_conns: 25
+  max_idle_conns: 5
+  conn_max_lifetime: 300    # 秒
+  conn_max_idle_time: 60    # 秒
+
+# Redis 配置
+redis:
+  host: localhost
+  port: 6379
+  password: ""
+  db: 0
+  pool_size: 10
+
+# gRPC 配置
+grpc:
+  port: 9090
+
+# 可观测性配置
+observability:
+  enabled: true
+  prometheus: true
+  open_telemetry: true
+  endpoint: localhost:4318
+
+# 安全配置
+security:
+  oauth2:
+    enabled: false
+    provider: oidc          # oidc, oauth2-proxy, zitadel, keycloak, okta
+    client_id: ""
+    client_secret: ""
+    issuer_url: ""
+    redirect_url: ""
+  audit:
+    enabled: true
+    table: audit_logs
+
+# 限流配置
+rate_limit:
+  enabled: true
+  requests: 100             # 每秒请求数
+  burst: 100                # 突发请求数
