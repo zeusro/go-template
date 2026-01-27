@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"zeusro.com/hermes/internal/core/database"
-	"zeusro.com/hermes/internal/domain/entity/audit"
 	"zeusro.com/hermes/internal/core/logprovider"
+	"zeusro.com/hermes/internal/domain/entity/audit"
 )
 
 // AuditLogger handles audit logging
