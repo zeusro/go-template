@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"time"
 
-	"zeusro.com/hermes/internal/core/database"
-	"zeusro.com/hermes/internal/core/logprovider"
-	"zeusro.com/hermes/internal/domain/entity/audit"
+	"github.com/zeusro/go-template/internal/core/database"
+	"github.com/zeusro/go-template/internal/core/logprovider"
+	"github.com/zeusro/go-template/internal/domain/entity/audit"
 )
 
 // AuditLogger handles audit logging

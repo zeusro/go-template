@@ -10,8 +10,8 @@ import (
 	"github.com/coreos/go-oidc/v3/oidc"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/oauth2"
-	"zeusro.com/hermes/internal/core/config"
-	"zeusro.com/hermes/internal/core/logprovider"
+	"github.com/zeusro/go-template/internal/core/config"
+	"github.com/zeusro/go-template/internal/core/logprovider"
 )
 
 // OAuth2Provider handles OAuth2/OIDC authentication

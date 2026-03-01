@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 
-	"zeusro.com/hermes/internal/domain/entity"
+	"github.com/zeusro/go-template/internal/domain/entity"
 )
 
 // UserRepository defines the interface for user data access (Repository pattern)

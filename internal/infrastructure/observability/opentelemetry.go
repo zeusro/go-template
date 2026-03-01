@@ -10,8 +10,8 @@ import (
 	"go.opentelemetry.io/otel/sdk/resource"
 	"go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.21.0"
-	"zeusro.com/hermes/internal/core/config"
-	"zeusro.com/hermes/internal/core/logprovider"
+	"github.com/zeusro/go-template/internal/core/config"
+	"github.com/zeusro/go-template/internal/core/logprovider"
 )
 
 // InitOpenTelemetry initializes OpenTelemetry tracing

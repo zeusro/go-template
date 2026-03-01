@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/time/rate"
-	"zeusro.com/hermes/internal/core/config"
+	"github.com/zeusro/go-template/internal/core/config"
 )
 
 // RateLimiter provides rate limiting middleware

@@ -1,6 +1,8 @@
 package observability
 
 import (
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -51,7 +53,7 @@ func PrometheusMiddleware() gin.HandlerFunc {
 			HTTPRequestDuration.WithLabelValues(
 				c.Request.Method,
 				c.FullPath(),
-				c.Writer.Status(),
+				strconv.Itoa(c.Writer.Status()),
 			).Observe(v)
 		}))
 
@@ -60,7 +62,7 @@ func PrometheusMiddleware() gin.HandlerFunc {
 		HTTPRequestTotal.WithLabelValues(
 			c.Request.Method,
 			c.FullPath(),
-			c.Writer.Status(),
+			strconv.Itoa(c.Writer.Status()),
 		).Inc()
 
 		start.ObserveDuration()

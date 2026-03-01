@@ -11,12 +11,12 @@ import (
 
 	"go.uber.org/fx"
 	"go.uber.org/fx/fxevent"
-	"zeusro.com/hermes/api"
-	"zeusro.com/hermes/internal/core"
-	"zeusro.com/hermes/internal/core/config"
-	"zeusro.com/hermes/internal/core/logprovider"
-	"zeusro.com/hermes/internal/core/webprovider"
-	"zeusro.com/hermes/internal/service"
+	"github.com/zeusro/go-template/api"
+	"github.com/zeusro/go-template/internal/core"
+	"github.com/zeusro/go-template/internal/core/config"
+	"github.com/zeusro/go-template/internal/core/logprovider"
+	"github.com/zeusro/go-template/internal/core/webprovider"
+	"github.com/zeusro/go-template/internal/service"
 )
 
 func main() {

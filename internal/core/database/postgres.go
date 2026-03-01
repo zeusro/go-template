@@ -7,8 +7,8 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"zeusro.com/hermes/internal/core/config"
-	"zeusro.com/hermes/internal/core/logprovider"
+	"github.com/zeusro/go-template/internal/core/config"
+	"github.com/zeusro/go-template/internal/core/logprovider"
 )
 
 // DB wraps GORM DB instance

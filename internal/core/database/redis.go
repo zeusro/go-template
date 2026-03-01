@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/redis/go-redis/v9"
-	"zeusro.com/hermes/internal/core/config"
-	"zeusro.com/hermes/internal/core/logprovider"
+	"github.com/zeusro/go-template/internal/core/config"
+	"github.com/zeusro/go-template/internal/core/logprovider"
 )
 
 // RedisClient wraps Redis client

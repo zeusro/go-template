@@ -7,11 +7,11 @@ import (
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
-	"zeusro.com/hermes/api/grpc/pb"
-	"zeusro.com/hermes/internal/core/config"
-	"zeusro.com/hermes/internal/core/logprovider"
-	domainentity "zeusro.com/hermes/internal/domain/entity"
-	"zeusro.com/hermes/internal/domain/service"
+	"github.com/zeusro/go-template/api/grpc/pb"
+	"github.com/zeusro/go-template/internal/core/config"
+	"github.com/zeusro/go-template/internal/core/logprovider"
+	domainentity "github.com/zeusro/go-template/internal/domain/entity"
+	"github.com/zeusro/go-template/internal/domain/service"
 )
 
 // Server wraps gRPC server

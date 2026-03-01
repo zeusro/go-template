@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"zeusro.com/hermes/internal/core/database"
+	"github.com/zeusro/go-template/internal/core/database"
 )
 
 // Cache provides caching functionality using Redis

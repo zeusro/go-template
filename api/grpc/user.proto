@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package api.grpc;
 
-option go_package = "zeusro.com/hermes/api/grpc";
+option go_package = "github.com/zeusro/go-template/api/grpc/pb";
 
 // User service definition
 service UserService {

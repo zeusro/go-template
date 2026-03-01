@@ -5,8 +5,8 @@ import (
 	"errors"
 	"fmt"
 
-	"zeusro.com/hermes/internal/domain/entity"
-	"zeusro.com/hermes/internal/domain/repository"
+	"github.com/zeusro/go-template/internal/domain/entity"
+	"github.com/zeusro/go-template/internal/domain/repository"
 )
 
 // UserService defines the business logic for user operations

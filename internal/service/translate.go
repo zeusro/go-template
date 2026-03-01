@@ -8,12 +8,12 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"zeusro.com/hermes/function/web/translate"
-	"zeusro.com/hermes/function/web/translate/model"
-	"zeusro.com/hermes/internal/core/config"
-	"zeusro.com/hermes/internal/core/logprovider"
-	"zeusro.com/hermes/internal/core/webprovider"
-	baseModel "zeusro.com/hermes/model"
+	"github.com/zeusro/go-template/function/web/translate"
+	"github.com/zeusro/go-template/function/web/translate/model"
+	"github.com/zeusro/go-template/internal/core/config"
+	"github.com/zeusro/go-template/internal/core/logprovider"
+	"github.com/zeusro/go-template/internal/core/webprovider"
+	baseModel "github.com/zeusro/go-template/model"
 )
 
 func NewTranslateService(gin webprovider.MyGinEngine, l logprovider.Logger,

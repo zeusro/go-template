@@ -5,9 +5,9 @@ import (
 	"errors"
 
 	"gorm.io/gorm"
-	"zeusro.com/hermes/internal/core/database"
-	"zeusro.com/hermes/internal/domain/entity"
-	"zeusro.com/hermes/internal/domain/repository"
+	"github.com/zeusro/go-template/internal/core/database"
+	"github.com/zeusro/go-template/internal/domain/entity"
+	"github.com/zeusro/go-template/internal/domain/repository"
 )
 
 // userRepository implements repository.UserRepository

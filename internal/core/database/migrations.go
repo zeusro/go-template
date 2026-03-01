@@ -1,9 +1,9 @@
 package database
 
 import (
-	"zeusro.com/hermes/internal/core/logprovider"
-	"zeusro.com/hermes/internal/domain/entity"
-	"zeusro.com/hermes/internal/domain/entity/audit"
+	"github.com/zeusro/go-template/internal/core/logprovider"
+	"github.com/zeusro/go-template/internal/domain/entity"
+	"github.com/zeusro/go-template/internal/domain/entity/audit"
 )
 
 // AutoMigrate runs database migrations

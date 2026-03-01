@@ -1,6 +1,7 @@
 .PHONY: help build test lint run clean docker-build docker-run migrate auto_commit
+.DEFAULT_GOAL := help
 
-help: ## Show this help message
+help: ## Show this help message (default)
 	@echo 'Usage: make [target]'
 	@echo ''
 	@echo 'Available targets:'

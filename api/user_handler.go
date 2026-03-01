@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"zeusro.com/hermes/internal/domain/service"
+	"github.com/zeusro/go-template/internal/domain/service"
 )
 
 type UserHandler struct {

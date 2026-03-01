@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"zeusro.com/hermes/function/web"
+	"github.com/zeusro/go-template/function/web"
 )
 
 type Translator interface {

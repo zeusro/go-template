@@ -2,13 +2,13 @@ package core
 
 import (
 	"go.uber.org/fx"
-	"zeusro.com/hermes/internal/core/config"
-	"zeusro.com/hermes/internal/core/database"
-	"zeusro.com/hermes/internal/core/logprovider"
-	"zeusro.com/hermes/internal/core/webprovider"
-	"zeusro.com/hermes/internal/infrastructure/cache"
-	"zeusro.com/hermes/internal/infrastructure/observability"
-	"zeusro.com/hermes/internal/infrastructure/security"
+	"github.com/zeusro/go-template/internal/core/config"
+	"github.com/zeusro/go-template/internal/core/database"
+	"github.com/zeusro/go-template/internal/core/logprovider"
+	"github.com/zeusro/go-template/internal/core/webprovider"
+	"github.com/zeusro/go-template/internal/infrastructure/cache"
+	"github.com/zeusro/go-template/internal/infrastructure/observability"
+	"github.com/zeusro/go-template/internal/infrastructure/security"
 )
 
 var CoreModule = fx.Options(

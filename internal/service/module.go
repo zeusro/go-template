@@ -2,7 +2,7 @@ package service
 
 import (
 	"go.uber.org/fx"
-	domainService "zeusro.com/hermes/internal/domain/service"
+	domainService "github.com/zeusro/go-template/internal/domain/service"
 )
 
 var Modules = fx.Options(
